@@ -9,7 +9,7 @@ resource "aws_ecs_cluster" "cohort_demo_ecs_cluster" {
   configuration {
     execute_command_configuration {
       kms_key_id = aws_kms_key.cohort_demo_kms.arn
-      logging    = "DEFAULT"
+      logging    = "OVERRIDE"
 
       log_configuration {
         cloud_watch_encryption_enabled = true
