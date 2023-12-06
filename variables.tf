@@ -59,10 +59,11 @@ variable "ecs_tasks_sg" {
   //default     = ""
 }
 
-variable "alb_sg" {
+/*variable "alb_sg" {
   description = "AWS ECS ALB security groups"
   //default     = ""
 }
+*/
 
 variable "ecs_subnet_ids" {
   description = "ECS subnet ids"
