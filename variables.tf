@@ -33,6 +33,11 @@ variable "ecr_repo_name" {
   //default     = ""
 }
 
+variable "image_tag" {
+  description = "AWS ECR image tag"
+  //default     = ""
+}
+
 variable "container_port" {
   description = "ECS container_port"
   //default     = ""
