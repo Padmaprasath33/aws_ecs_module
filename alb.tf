@@ -1,7 +1,7 @@
 resource "aws_lb" "app_lb" {
   name               = "cohort-demo-alb"
   load_balancer_type = "application"
-  subnets            = var.ecs_subnet_ids
+  subnets            = [var.ecs_subnet_ids.*.id]
   idle_timeout       = 60
   security_groups    = [var.aws_security_group_application_elb_sg_id]
 }
@@ -19,7 +19,7 @@ resource "aws_lb_target_group" "tg" {
   name        = "cohort-demo-tg-${element(local.target_groups, count.index)}"
   port        = 443
   protocol    = "HTTP"
-  target_type = "instance"
+  target_type = "ip"
   vpc_id      = var.vpc_id
   health_check {
     matcher = "200,301,302,404"
