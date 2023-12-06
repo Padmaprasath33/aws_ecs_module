@@ -66,7 +66,7 @@ resource "aws_iam_role_policy_attachment" "ecs-task-execution-role-policy-attach
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }
 
-data "aws_iam_policy_document" "assume_by_codedeploy" {
+/*data "aws_iam_policy_document" "assume_by_codedeploy" {
   statement {
     sid     = ""
     effect  = "Allow"
@@ -140,3 +140,4 @@ resource "aws_iam_role_policy" "codedeploy" {
   role   = aws_iam_role.codedeploy.name
   policy = data.aws_iam_policy_document.codedeploy.json
 }
+*/
