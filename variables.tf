@@ -58,3 +58,18 @@ variable "aws_efs_file_system_id" {
   //default     = ""
 }
 */
+
+variable "ecs_task_role" {
+  description = "AWS ECS task role"
+  //default     = ""
+}
+
+variable "ecs_task_policy" {
+  description = "AWS ECS task policy"
+  //default     = ""
+}
+
+variable "ecs_task_execution_role" {
+  description = "AWS ECS task execution role"
+  //default     = ""
+}
