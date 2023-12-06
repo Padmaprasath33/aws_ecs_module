@@ -1,4 +1,4 @@
-resource "aws_codedeploy_app" "frontend" {
+/*resource "aws_codedeploy_app" "frontend" {
   compute_platform = "ECS"
   name             = "cohort-demo-ui-deploy"
 }
@@ -53,3 +53,4 @@ resource "aws_codedeploy_deployment_group" "frontend" {
   }
 
 }
+*/
