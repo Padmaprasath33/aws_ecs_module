@@ -48,7 +48,8 @@ variable "aws_efs_file_system_id" {
   //default     = ""
 }
 
-variable "aws_efs_access_point_id" {
+/*variable "aws_efs_access_point_id" {
   description = "AWS EFS access point id"
   //default     = ""
 }
+*/
