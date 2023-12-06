@@ -186,9 +186,9 @@ resource "aws_ecs_service" "cohort-demo-backend-service" {
 
   }
  
- deployment_controller {
+ /*deployment_controller {
     type = "CODE_DEPLOY"
-  }
+  }*/
  
  lifecycle {
     ignore_changes = [task_definition, desired_count]
