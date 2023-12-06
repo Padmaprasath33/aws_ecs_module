@@ -127,7 +127,7 @@ data "aws_iam_policy_document" "codedeploy" {
     "codedeploy:RegisterApplicationRevision"]
 
     resources = [
-      aws_ecs_service.frontend.id,
+      aws_ecs_service.cohort-demo-ui-service.id,
       aws_codedeploy_deployment_group.frontend.arn,
       "arn:aws:codedeploy:${var.region}:${var.aws_account_id}:deploymentconfig:*}",
       aws_codedeploy_app.frontend.arn
