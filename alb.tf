@@ -31,14 +31,19 @@ resource "aws_alb_listener" "listener_80" {
   load_balancer_arn = aws_lb.app_lb.arn
   port              = "80"
   protocol          = "HTTP"
-  default_action {
+  /*default_action {
     type = "redirect"
     redirect {
       port        = "443"
       protocol    = "HTTPS"
       status_code = "HTTP_301"
     }
+  }*/
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.tg[0].arn
   }
+  depends_on = [aws_lb_target_group.tg]
 }
 
 resource "aws_alb_listener" "listener_8080" {
@@ -52,7 +57,7 @@ resource "aws_alb_listener" "listener_8080" {
   }
 }
 
-resource "aws_alb_listener" "listener_443" {
+/*resource "aws_alb_listener" "listener_443" {
   load_balancer_arn = aws_lb.app_lb.arn
   port              = "443"
   protocol          = "HTTPS"
@@ -67,3 +72,4 @@ resource "aws_alb_listener" "listener_443" {
     ignore_changes = [default_action]
   }
 }
+*/

@@ -36,7 +36,8 @@ resource "aws_codedeploy_deployment_group" "frontend" {
   load_balancer_info {
     target_group_pair_info {
       prod_traffic_route {
-        listener_arns = [aws_alb_listener.listener_443.arn]
+        //listener_arns = [aws_alb_listener.listener_443.arn]
+        listener_arns = [aws_alb_listener.listener_80.arn]
       }
 
       target_group {
