@@ -161,6 +161,40 @@ resource "aws_ecs_service" "cohort-demo-ui-service" {
   }
 }
 
+resource "aws_ecs_service" "cohort-demo-backend-service" {
+ name                               = "cohort-demo-backend-service"
+ cluster                            = aws_ecs_cluster.cohort_demo_ecs_cluster.id
+ task_definition                    = aws_ecs_task_definition.cohort_demo_backend_task_definition.arn
+ desired_count                      = 3
+ deployment_minimum_healthy_percent = 100
+ deployment_maximum_percent         = 200
+ health_check_grace_period_seconds  = 300
+ launch_type                        = "FARGATE"
+ scheduling_strategy                = "REPLICA"
+ force_new_deployment = true
+ 
+ network_configuration {
+   security_groups  = [var.ecs_tasks_sg]
+   subnets          = var.ecs_subnet_ids
+   assign_public_ip = false
+ }
+ 
+ service_registries {
+    registry_arn   = aws_service_discovery_service.cohort_demo_service_discovery.arn
+    container_name = "cohort_demo_ecs_container"
+    container_port = var.container_port
+
+  }
+ 
+ deployment_controller {
+    type = "CODE_DEPLOY"
+  }
+ 
+ lifecycle {
+    ignore_changes = [task_definition, desired_count]
+  }
+}
+
 /*resource "aws_lb" "cohort_demo_alb" {
   name               = "cohort_demo_alb"
   internal           = false

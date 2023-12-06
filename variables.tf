@@ -85,3 +85,14 @@ variable "lb_target_group_name" {
   type    = string
   default = "tg"
 }
+
+variable "cohort_demo_service_discovery_namespace_name" {
+  description = "Cohort private dns namespace for service discovery"
+  //default = ""
+}
+
+variable "cohort_demo_service_name" {
+  description = "Cohort demo service discovery service name"
+  //default = ""
+}
+
