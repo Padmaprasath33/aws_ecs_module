@@ -25,7 +25,7 @@ resource "aws_kms_key" "cohort_demo_kms" {
 }
 
 resource "aws_cloudwatch_log_group" "cohort_demo_ecs_log_group" {
-  name = var.cohort_demo_ecs_log_group
+  name = "cohort_demo_ecs_log_group_${var.region}"
 }
 
 data "aws_ecr_image" "cohort_demo" {
