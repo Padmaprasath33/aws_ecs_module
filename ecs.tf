@@ -182,8 +182,6 @@ resource "aws_ecs_service" "cohort-demo-backend-service" {
  service_registries {
     registry_arn   = aws_service_discovery_service.cohort_demo_service_discovery.arn
     container_name = "cohort_demo_ecs_container"
-    container_port = var.container_port
-
   }
  
  /*deployment_controller {
