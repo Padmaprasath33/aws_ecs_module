@@ -65,12 +65,17 @@ variable "ecs_tasks_sg" {
 }
 */
 
-variable "ecs_subnet_ids" {
-  description = "ECS subnet ids"
+variable "ecs_public_subnet_ids" {
+  description = "ECS public subnet ids"
   type    = list(string)
   default     = ["", ""] 
 }
 
+variable "ecs_private_subnet_ids" {
+  description = "ECS private subnet ids"
+  type    = list(string)
+  default     = ["", ""] 
+}
 variable "vpc_id" {
   description = "VPC main id"
   //default     = ""

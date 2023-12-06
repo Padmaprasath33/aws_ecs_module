@@ -143,7 +143,7 @@ resource "aws_ecs_service" "cohort-demo-ui-service" {
  
  network_configuration {
    security_groups  = [var.ecs_tasks_sg]
-   subnets          = var.ecs_subnet_ids
+   subnets          = var.ecs_private_subnet_ids
    assign_public_ip = false
  }
  
@@ -175,7 +175,7 @@ resource "aws_ecs_service" "cohort-demo-backend-service" {
  
  network_configuration {
    security_groups  = [var.ecs_tasks_sg]
-   subnets          = var.ecs_subnet_ids
+   subnets          = var.ecs_private_subnet_ids
    assign_public_ip = false
  }
  
@@ -198,7 +198,7 @@ resource "aws_ecs_service" "cohort-demo-backend-service" {
   internal           = false
   load_balancer_type = "application"
   security_groups    = var.alb_sg
-  subnets            = var.ecs_subnet_ids
+  subnets            = var.ecs_public_subnet_ids
  
   enable_deletion_protection = false
 }

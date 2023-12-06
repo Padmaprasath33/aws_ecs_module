@@ -1,7 +1,7 @@
 resource "aws_lb" "app_lb" {
   name               = "cohort-demo-alb"
   load_balancer_type = "application"
-  subnets            = var.ecs_subnet_ids
+  subnets            = var.ecs_public_subnet_ids
   idle_timeout       = 60
   security_groups    = [var.aws_security_group_application_elb_sg_id]
 }
