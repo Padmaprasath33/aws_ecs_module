@@ -53,3 +53,34 @@ variable "aws_efs_file_system_id" {
   //default     = ""
 }
 */
+
+variable "ecs_tasks_sg" {
+  description = "AWS ECS tasks security groups"
+  //default     = ""
+}
+
+variable "alb_sg" {
+  description = "AWS ECS ALB security groups"
+  //default     = ""
+}
+
+variable "ecs_subnet_ids" {
+  description = "ECS subnet ids"
+  type    = list(string)
+  default     = ["", ""] 
+}
+
+variable "vpc_id" {
+  description = "VPC main id"
+  //default     = ""
+}
+
+variable "aws_security_group_application_elb_sg_id" {
+  description = "aws security group for application load balancer id"
+  //default     = ""
+}
+
+variable "lb_target_group_name" {
+  type    = string
+  default = "tg"
+}
