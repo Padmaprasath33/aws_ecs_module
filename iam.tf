@@ -111,7 +111,7 @@ data "aws_iam_policy_document" "codedeploy" {
     actions = ["iam:PassRole"]
 
     resources = [
-      aws_iam_role.ecs_task_role.arn
+      aws_iam_role.ecs_task_execution_role.arn
     ]
   }
 
