@@ -87,7 +87,7 @@ resource "aws_iam_role" "codedeploy" {
   assume_role_policy = data.aws_iam_policy_document.assume_by_codedeploy.json
 }
 
-data "aws_iam_policy_document" "codedeploy" {
+/*data "aws_iam_policy_document" "codedeploy" {
   statement {
     sid    = "AllowLoadBalancingAndECSModifications"
     effect = "Allow"
@@ -142,4 +142,9 @@ data "aws_iam_policy_document" "codedeploy" {
 resource "aws_iam_role_policy" "codedeploy" {
   role   = aws_iam_role.codedeploy.name
   policy = data.aws_iam_policy_document.codedeploy.json
+}*/
+
+resource "aws_iam_role_policy_attachment" "codedeploy" {
+  policy_arn = "arn:aws:iam::aws:policy/AWSCodeDeployRoleForECS"
+  role       = aws_iam_role.codedeploy.name
 }
