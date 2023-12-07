@@ -195,10 +195,15 @@ resource "aws_ecs_service" "cohort-demo-backend-service" {
     registry_arn   = aws_service_discovery_service.cohort_demo_service_discovery.arn
     container_name = "cohort_demo_ecs_container"
   }
- 
- /*deployment_controller {
+
+  load_balancer {
+   target_group_arn = aws_lb_target_group.tg_internal[0].arn
+   container_name   = "cohort_demo_ecs_container"
+   container_port   = var.container_port
+ }
+ deployment_controller {
     type = "CODE_DEPLOY"
-  }*/
+  }
  
  lifecycle {
     ignore_changes = [task_definition, desired_count]

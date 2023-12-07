@@ -86,6 +86,11 @@ variable "aws_security_group_application_elb_sg_id" {
   //default     = ""
 }
 
+variable "aws_security_group_application_elb_internal_sg_id" {
+  description = "aws security group for internal application load balancer id"
+  //default     = ""
+}
+
 variable "lb_target_group_name" {
   type    = string
   default = "tg"

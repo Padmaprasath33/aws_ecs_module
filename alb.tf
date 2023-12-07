@@ -8,8 +8,8 @@ resource "aws_lb" "app_lb" {
 
 locals {
   target_groups = [
-    "green",
     "blue",
+    "green",
   ]
 }
 
@@ -73,3 +73,54 @@ resource "aws_alb_listener" "listener_8080" {
   }
 }
 */
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+resource "aws_lb" "app_lb_internal" {
+  name               = "cohort-demo-alb-internal"
+  internal           = true
+  load_balancer_type = "application"
+  subnets            = var.ecs_private_subnet_ids
+  idle_timeout       = 60
+  security_groups    = [var.aws_security_group_application_elb_internal_sg_id]
+}
+
+resource "aws_lb_target_group" "tg_internal" {
+  count = length(local.target_groups)
+
+  name        = "cohort-demo-internal-tg-${element(local.target_groups, count.index)}"
+  port        = 80
+  protocol    = "HTTP"
+  target_type = "ip"
+  vpc_id      = var.vpc_id
+  health_check {
+    matcher = "200,301,302,404"
+    path    = "/"
+  }
+}
+
+resource "aws_alb_listener" "internal_listener_80" {
+  load_balancer_arn = aws_lb.app_lb_internal.arn
+  port              = "80"
+  protocol          = "HTTP"
+  
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.tg_internal[0].arn
+  }
+  depends_on = [aws_lb_target_group.tg_internal]
+}
+
+resource "aws_alb_listener" "internal_listener_8080" {
+  load_balancer_arn = aws_lb.app_lb_internal.id
+  port              = 8080
+  protocol          = "HTTP"
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.tg_internal[1].arn
+  }
+}
