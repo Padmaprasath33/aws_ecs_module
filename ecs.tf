@@ -80,7 +80,7 @@ resource "aws_ecs_task_definition" "cohort_demo_ui_task_definition" {
 
     efs_volume_configuration {
       file_system_id          = var.aws_efs_file_system_id
-      root_directory          = "/path/to/my/data"
+      root_directory          = "/"
       //transit_encryption      = "ENABLED"
       //transit_encryption_port = 2999
       /*authorization_config {
@@ -130,7 +130,7 @@ resource "aws_ecs_task_definition" "cohort_demo_backend_task_definition" {
 
     efs_volume_configuration {
       file_system_id          = var.aws_efs_file_system_id
-      root_directory          = "/path/to/my/data"
+      root_directory          = "/"
       //transit_encryption      = "ENABLED"
       //transit_encryption_port = 2999
       /*authorization_config {
