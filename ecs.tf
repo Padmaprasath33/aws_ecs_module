@@ -54,7 +54,7 @@ resource "aws_ecs_task_definition" "cohort_demo_ui_task_definition" {
    name        = "cohort_demo_ecs_container"
    //412699049661.dkr.ecr.us-east-1.amazonaws.com/cohort_demo:5dab2de
    //image       = "${var.aws_account_id}.dkr.ecr.${var.region}.amazonaws.com/${var.ecr_repo_name}:${var.image_tag}"
-   image = "tomcat:latest"
+   image = "nginx"
    essential   = true
    "mountPoints": [
           {
@@ -105,7 +105,7 @@ resource "aws_ecs_task_definition" "cohort_demo_backend_task_definition" {
    name        = "cohort_demo_ecs_container"
    //412699049661.dkr.ecr.us-east-1.amazonaws.com/cohort_demo:5dab2de
    //image       = "${var.aws_account_id}.dkr.ecr.${var.region}.amazonaws.com/${var.ecr_repo_name}:${var.image_tag}"
-   image = "tomcat:latest"
+   image = "nginx"
    essential   = true
    "mountPoints": [
           {
