@@ -1,3 +1,26 @@
+variable "resource_tags" {
+  description = "Tags to set for all resources"
+  type        = map(string)
+  /*default     = {
+    project     = "aws-proserv",
+    environment = "dev"
+    application = "cohort-demo"
+  }
+  */
+}
+
+variable "resource_tags_dr" {
+  description = "Tags to set for all resources"
+  type        = map(string)
+  /*default     = {
+    project     = "aws-proserv",
+    environment = "dev"
+    application = "cohort-demo"
+    backup      = "yes"
+  }
+  */
+}
+
 variable "cohort_demo_ecs_cluster_name" {
   description = "ECS cluster name"
   //default     = ""
@@ -94,5 +117,9 @@ variable "aws_security_group_application_elb_internal_sg_id" {
 variable "lb_target_group_name" {
   type    = string
   default = "tg"
+}
+
+variable "health_check_path" {
+  //default = "/index"
 }
 

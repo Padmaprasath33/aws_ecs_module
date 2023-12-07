@@ -1,6 +1,7 @@
 resource "aws_iam_role" "ecs_task_role" {
   name = "2191420-cohort-demo-ecs-task-role"
- 
+  tags = var.resource_tags
+
   assume_role_policy = <<EOF
 {
  "Version": "2012-10-17",
@@ -21,6 +22,7 @@ EOF
 resource "aws_iam_policy" "ecs_task_policy" {
   name        = "2191420-cohort-demo-ecs-task-policy"
   description = "Policy that allows access for ecs tasks to AWS services"
+  tags = var.resource_tags
  
  policy = <<EOF
 {
@@ -43,6 +45,7 @@ resource "aws_iam_role_policy_attachment" "ecs-task-role-policy-attachment" {
 
 resource "aws_iam_role" "ecs_task_execution_role" {
   name = "2191420-cohort-demo-ecs-task-execution-role"
+  tags = var.resource_tags
  
   assume_role_policy = <<EOF
 {
@@ -85,6 +88,7 @@ data "aws_iam_policy_document" "assume_by_codedeploy" {
 resource "aws_iam_role" "codedeploy" {
   name               = "2191420-cohort-demo-codedeploy-role"
   assume_role_policy = data.aws_iam_policy_document.assume_by_codedeploy.json
+  tags = var.resource_tags
 }
 
 /*data "aws_iam_policy_document" "codedeploy" {

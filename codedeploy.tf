@@ -1,6 +1,7 @@
 resource "aws_codedeploy_app" "cohort_demo_ui_app" {
   compute_platform = "ECS"
   name             = "cohort-demo-ui-app-deploy"
+  tags = var.resource_tags
 }
 
 resource "aws_codedeploy_deployment_group" "cohort_demo_ui_app_deployment_group" {
@@ -48,9 +49,7 @@ resource "aws_codedeploy_deployment_group" "cohort_demo_ui_app_deployment_group"
       target_group {
         name = aws_lb_target_group.tg[1].name
       }
-
-      
     }
   }
-
+  tags = var.resource_tags
 }

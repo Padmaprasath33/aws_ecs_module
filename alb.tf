@@ -11,6 +11,7 @@ locals {
     "blue",
     "green",
   ]
+  tags = var.resource_tags
 }
 
 resource "aws_lb_target_group" "tg" {
@@ -24,8 +25,9 @@ resource "aws_lb_target_group" "tg" {
   vpc_id      = var.vpc_id
   health_check {
     matcher = "200,301,302,404"
-    path    = "/index"
+    path    = var.health_check_path
   }
+  tags = var.resource_tags
 }
 
 resource "aws_alb_listener" "listener_80" {
@@ -45,6 +47,7 @@ resource "aws_alb_listener" "listener_80" {
     target_group_arn = aws_lb_target_group.tg[0].arn
   }
   depends_on = [aws_lb_target_group.tg]
+  tags = var.resource_tags
 }
 
 resource "aws_alb_listener" "listener_8080" {
@@ -56,6 +59,7 @@ resource "aws_alb_listener" "listener_8080" {
     type             = "forward"
     target_group_arn = aws_lb_target_group.tg[1].arn
   }
+  tags = var.resource_tags
 }
 
 /*resource "aws_alb_listener" "listener_443" {
@@ -87,6 +91,7 @@ resource "aws_lb" "app_lb_internal" {
   subnets            = var.ecs_private_subnet_ids
   idle_timeout       = 60
   security_groups    = [var.aws_security_group_application_elb_internal_sg_id]
+  tags = var.resource_tags
 }
 
 resource "aws_lb_target_group" "tg_internal" {
@@ -99,8 +104,9 @@ resource "aws_lb_target_group" "tg_internal" {
   vpc_id      = var.vpc_id
   health_check {
     matcher = "200,301,302,404"
-    path    = "/index"
+    path    = var.health_check_path
   }
+  tags = var.resource_tags
 }
 
 resource "aws_alb_listener" "internal_listener_80" {
@@ -113,6 +119,7 @@ resource "aws_alb_listener" "internal_listener_80" {
     target_group_arn = aws_lb_target_group.tg_internal[0].arn
   }
   depends_on = [aws_lb_target_group.tg_internal]
+  tags = var.resource_tags
 }
 
 resource "aws_alb_listener" "internal_listener_8080" {
@@ -124,4 +131,5 @@ resource "aws_alb_listener" "internal_listener_8080" {
     type             = "forward"
     target_group_arn = aws_lb_target_group.tg_internal[1].arn
   }
+  tags = var.resource_tags
 }

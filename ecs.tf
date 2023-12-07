@@ -17,23 +17,28 @@ resource "aws_ecs_cluster" "cohort_demo_ecs_cluster" {
       }
     }
   }
+  tags = var.resource_tags
 }
 
 resource "aws_kms_key" "cohort_demo_kms" {
   description             = "KMS key for cohort demo"
   deletion_window_in_days = 10
+  tags = var.resource_tags
 }
 
 resource "aws_cloudwatch_log_group" "cohort_demo_ecs_log_group" {
   name = "cohort-demo-ecs-log-group"
+  tags = var.resource_tags
 }
 
 resource "aws_cloudwatch_log_group" "cohort_demo_ecs_ui_log_group" {
   name = "cohort-demo-ecs-ui-log-group"
+  tags = var.resource_tags
 }
 
 resource "aws_cloudwatch_log_group" "cohort_demo_ecs_backend_log_group" {
   name = "cohort-demo-ecs-backend-log-group"
+  tags = var.resource_tags
 }
 
 /*data "aws_ecr_image" "cohort_demo" {
@@ -90,6 +95,7 @@ resource "aws_ecs_task_definition" "cohort_demo_ui_task_definition" {
       }*/
     }
   }
+  tags = var.resource_tags
 }
 
 resource "aws_ecs_task_definition" "cohort_demo_backend_task_definition" {
@@ -140,6 +146,7 @@ resource "aws_ecs_task_definition" "cohort_demo_backend_task_definition" {
       }*/
     }
   }
+  tags = var.resource_tags
 }
 
 resource "aws_ecs_service" "cohort-demo-ui-service" {
@@ -172,6 +179,7 @@ resource "aws_ecs_service" "cohort-demo-ui-service" {
  lifecycle {
     ignore_changes = [task_definition, desired_count, load_balancer]
   }
+  tags = var.resource_tags
 }
 
 resource "aws_ecs_service" "cohort-demo-backend-service" {
@@ -205,6 +213,7 @@ resource "aws_ecs_service" "cohort-demo-backend-service" {
  lifecycle {
     ignore_changes = [task_definition, desired_count, load_balancer]
   }
+  tags = var.resource_tags
 }
 
 resource "aws_appautoscaling_target" "ecs_target" {
@@ -213,6 +222,7 @@ resource "aws_appautoscaling_target" "ecs_target" {
   resource_id        = "service/${aws_ecs_cluster.cohort_demo_ecs_cluster.name}/${aws_ecs_service.cohort-demo-ui-service.name}"
   scalable_dimension = "ecs:service:DesiredCount"
   service_namespace  = "ecs"
+  tags = var.resource_tags
 }
 
 resource "aws_appautoscaling_policy" "ecs_policy_memory" {
