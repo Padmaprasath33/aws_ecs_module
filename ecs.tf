@@ -36,10 +36,11 @@ resource "aws_cloudwatch_log_group" "cohort_demo_ecs_backend_log_group" {
   name = "cohort_demo_ecs_backend_log_group_${var.region}"
 }
 
-data "aws_ecr_image" "cohort_demo" {
+/*data "aws_ecr_image" "cohort_demo" {
   repository_name = "cohort_demo"
   most_recent       = true
 }
+*/
 
 resource "aws_ecs_task_definition" "cohort_demo_ui_task_definition" {
   family = "cohort_demo_ui_task_definition"
