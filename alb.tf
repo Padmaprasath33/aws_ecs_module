@@ -24,7 +24,7 @@ resource "aws_lb_target_group" "tg" {
   vpc_id      = var.vpc_id
   health_check {
     matcher = "200,301,302,404"
-    path    = "/"
+    path    = "/index"
   }
 }
 
@@ -99,7 +99,7 @@ resource "aws_lb_target_group" "tg_internal" {
   vpc_id      = var.vpc_id
   health_check {
     matcher = "200,301,302,404"
-    path    = "/"
+    path    = "/index"
   }
 }
 
