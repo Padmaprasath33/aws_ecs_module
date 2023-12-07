@@ -1,10 +1,11 @@
-/*resource "aws_codedeploy_app" "frontend" {
+resource "aws_codedeploy_app" "cohort_demo_ui_app" {
   compute_platform = "ECS"
-  name             = "cohort-demo-ui-deploy"
+  name             = "cohort-demo-ui-app-deploy"
 }
-resource "aws_codedeploy_deployment_group" "frontend" {
-  app_name               = aws_codedeploy_app.frontend.name
-  deployment_group_name  = "cohort-demo-ui-deploy-group"
+
+resource "aws_codedeploy_deployment_group" "cohort_demo_ui_app_deployment_group" {
+  app_name               = aws_codedeploy_app.cohort_demo_ui_app.name
+  deployment_group_name  = "cohort-demo-ui-app-deployment-group"
   deployment_config_name = "CodeDeployDefault.ECSCanary10Percent5Minutes"
   service_role_arn       = aws_iam_role.codedeploy.arn
 
@@ -53,4 +54,3 @@ resource "aws_codedeploy_deployment_group" "frontend" {
   }
 
 }
-*/

@@ -66,7 +66,10 @@ resource "aws_iam_role_policy_attachment" "ecs-task-execution-role-policy-attach
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }
 
-/*data "aws_iam_policy_document" "assume_by_codedeploy" {
+
+////////////////////////////////////
+
+data "aws_iam_policy_document" "assume_by_codedeploy" {
   statement {
     sid     = ""
     effect  = "Allow"
@@ -128,9 +131,9 @@ data "aws_iam_policy_document" "codedeploy" {
 
     resources = [
       aws_ecs_service.cohort-demo-ui-service.id,
-      aws_codedeploy_deployment_group.frontend.arn,
+      aws_codedeploy_deployment_group.cohort_demo_ui_app_deployment_group.arn,
       "arn:aws:codedeploy:${var.region}:${var.aws_account_id}:deploymentconfig:*}",
-      aws_codedeploy_app.frontend.arn
+      aws_codedeploy_app.cohort_demo_ui_app.arn
     ]
   }
 
@@ -140,4 +143,3 @@ resource "aws_iam_role_policy" "codedeploy" {
   role   = aws_iam_role.codedeploy.name
   policy = data.aws_iam_policy_document.codedeploy.json
 }
-*/
