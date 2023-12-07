@@ -54,7 +54,7 @@ resource "aws_ecs_task_definition" "cohort_demo_ui_task_definition" {
    name        = "cohort_demo_ecs_container"
    //412699049661.dkr.ecr.us-east-1.amazonaws.com/cohort_demo:5dab2de
    //image       = "${var.aws_account_id}.dkr.ecr.${var.region}.amazonaws.com/${var.ecr_repo_name}:${var.image_tag}"
-   image = "nginx"
+   image = "tomcat:latest"
    essential   = true
    "mountPoints": [
           {
@@ -105,7 +105,7 @@ resource "aws_ecs_task_definition" "cohort_demo_backend_task_definition" {
    name        = "cohort_demo_ecs_container"
    //412699049661.dkr.ecr.us-east-1.amazonaws.com/cohort_demo:5dab2de
    //image       = "${var.aws_account_id}.dkr.ecr.${var.region}.amazonaws.com/${var.ecr_repo_name}:${var.image_tag}"
-   image = "nginx"
+   image = "tomcat:latest"
    essential   = true
    "mountPoints": [
           {
@@ -193,23 +193,19 @@ resource "aws_ecs_service" "cohort-demo-backend-service" {
    subnets          = var.ecs_private_subnet_ids
    assign_public_ip = false
  }
- 
- service_registries {
-    registry_arn   = aws_service_discovery_service.cohort_demo_service_discovery.arn
-    container_name = "cohort_demo_ecs_container"
-  }
 
   load_balancer {
    target_group_arn = aws_lb_target_group.tg_internal[0].arn
    container_name   = "cohort_demo_ecs_container"
    container_port   = var.container_port
  }
+
  deployment_controller {
     type = "CODE_DEPLOY"
   }
  
  lifecycle {
-    ignore_changes = [task_definition, desired_count]
+    ignore_changes = [task_definition, desired_count, load_balancer]
   }
 }
 
