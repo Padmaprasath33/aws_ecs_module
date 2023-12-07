@@ -25,15 +25,15 @@ resource "aws_kms_key" "cohort_demo_kms" {
 }
 
 resource "aws_cloudwatch_log_group" "cohort_demo_ecs_log_group" {
-  name = "cohort_demo_ecs_log_group_${var.region}"
+  name = "cohort-demo-ecs-log-group"
 }
 
 resource "aws_cloudwatch_log_group" "cohort_demo_ecs_ui_log_group" {
-  name = "cohort_demo_ecs_ui_log_group_${var.region}"
+  name = "cohort-demo-ecs-ui-log-group"
 }
 
 resource "aws_cloudwatch_log_group" "cohort_demo_ecs_backend_log_group" {
-  name = "cohort_demo_ecs_backend_log_group_${var.region}"
+  name = "cohort-demo-ecs-backend-log-group"
 }
 
 /*data "aws_ecr_image" "cohort_demo" {
@@ -52,7 +52,6 @@ resource "aws_ecs_task_definition" "cohort_demo_ui_task_definition" {
   task_role_arn            = aws_iam_role.ecs_task_role.arn
   container_definitions = jsonencode([{
    name        = "cohort_demo_ecs_container"
-   //412699049661.dkr.ecr.us-east-1.amazonaws.com/cohort_demo:5dab2de
    //image       = "${var.aws_account_id}.dkr.ecr.${var.region}.amazonaws.com/${var.ecr_repo_name}:${var.image_tag}"
    image = "nginx"
    essential   = true
@@ -103,7 +102,6 @@ resource "aws_ecs_task_definition" "cohort_demo_backend_task_definition" {
   task_role_arn            = aws_iam_role.ecs_task_role.arn
   container_definitions = jsonencode([{
    name        = "cohort_demo_ecs_container"
-   //412699049661.dkr.ecr.us-east-1.amazonaws.com/cohort_demo:5dab2de
    //image       = "${var.aws_account_id}.dkr.ecr.${var.region}.amazonaws.com/${var.ecr_repo_name}:${var.image_tag}"
    image = "nginx"
    essential   = true
@@ -183,7 +181,7 @@ resource "aws_ecs_service" "cohort-demo-backend-service" {
  desired_count                      = 3
  deployment_minimum_healthy_percent = 100
  deployment_maximum_percent         = 200
- //health_check_grace_period_seconds  = 300
+ health_check_grace_period_seconds  = 300
  launch_type                        = "FARGATE"
  scheduling_strategy                = "REPLICA"
  force_new_deployment = true
@@ -208,72 +206,6 @@ resource "aws_ecs_service" "cohort-demo-backend-service" {
     ignore_changes = [task_definition, desired_count, load_balancer]
   }
 }
-
-/*resource "aws_lb" "cohort_demo_alb" {
-  name               = "cohort_demo_alb"
-  internal           = false
-  load_balancer_type = "application"
-  security_groups    = var.alb_sg
-  subnets            = var.ecs_public_subnet_ids
- 
-  enable_deletion_protection = false
-}
-
-resource "aws_alb_target_group" "cohort_demo_alb_tg" {
-  name        = "cohort_demo_alb_tg"
-  port        = 80
-  protocol    = "HTTP"
-  vpc_id      = var.vpc_id
-  target_type = "ip"
- 
-  health_check {
-   healthy_threshold   = "5"
-   interval            = "30"
-   protocol            = "HTTP"
-   matcher             = "200"
-   timeout             = "5"
-   path                = "/"
-   unhealthy_threshold = "2"
-  }
-}
-
-resource "aws_alb_listener" "http" {
-  load_balancer_arn = aws_lb.cohort_demo_alb.id
-  port              = 80
-  protocol          = "HTTP"
- 
-  //default_action {
-   //type = "redirect"
- 
-   //redirect {
-    // port        = 443
-    // protocol    = "HTTPS"
-    // status_code = "HTTP_301"
-   //}
-  //}
-  
-
-  default_action {
-    type             = "forward"
-    target_group_arn = aws_alb_target_group.cohort_demo_alb_tg.arn
-  }
-
-}
-*/
-/*resource "aws_alb_listener" "https" {
-  load_balancer_arn = aws_lb.cohort_demo_alb.id
-  port              = 443
-  protocol          = "HTTPS"
- 
-  ssl_policy        = "ELBSecurityPolicy-2016-08"
-  certificate_arn   = var.alb_tls_cert_arn
- 
-  default_action {
-    target_group_arn = aws_alb_target_group.cohort_demo_alb_tg.id
-    type             = "forward"
-  }
-}
-*/
 
 resource "aws_appautoscaling_target" "ecs_target" {
   max_capacity       = 5
