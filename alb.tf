@@ -8,8 +8,8 @@ resource "aws_lb" "app_lb" {
 
 locals {
   target_groups = [
-    "green",
-    "blue"
+    "blue",
+    "green"
   ]
   tags = var.resource_tags
 }
