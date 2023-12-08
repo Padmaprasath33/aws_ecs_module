@@ -81,6 +81,11 @@ variable "ecs_tasks_sg" {
   //default     = ""
 }
 
+variable "ecs_backend_tasks_sg" {
+  description = "AWS ECS backendtasks security groups"
+  //default     = ""
+}
+
 /*variable "alb_sg" {
   description = "AWS ECS ALB security groups"
   //default     = ""

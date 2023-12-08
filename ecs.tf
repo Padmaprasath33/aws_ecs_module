@@ -196,7 +196,7 @@ resource "aws_ecs_service" "cohort-demo-backend-service" {
  force_new_deployment = true
  
  network_configuration {
-   security_groups  = [var.ecs_tasks_sg]
+   security_groups  = [var.ecs_backend_tasks_sg]
    subnets          = var.ecs_private_subnet_ids
    assign_public_ip = false
  }
