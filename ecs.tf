@@ -62,7 +62,7 @@ resource "aws_ecs_task_definition" "cohort_demo_ui_task_definition" {
    essential   = true
    "mountPoints": [
           {
-              "containerPath": "/",
+              "containerPath": "/usr/share/nginx/html",
               "sourceVolume": var.efs_volume_name
           }
       ]
@@ -113,7 +113,7 @@ resource "aws_ecs_task_definition" "cohort_demo_backend_task_definition" {
    essential   = true
    "mountPoints": [
           {
-              "containerPath": "/",
+              "containerPath": "/usr/share/nginx/html",
               "sourceVolume": var.efs_volume_name
           }
       ]
