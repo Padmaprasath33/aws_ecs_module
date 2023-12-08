@@ -24,7 +24,7 @@ resource "aws_lb_target_group" "tg" {
   target_type = "ip"
   vpc_id      = var.vpc_id
   health_check {
-    matcher = "200,301,302,404"
+    matcher = "200"
     path    = var.health_check_path
   }
   tags = var.resource_tags
@@ -103,7 +103,7 @@ resource "aws_lb_target_group" "tg_internal" {
   target_type = "ip"
   vpc_id      = var.vpc_id
   health_check {
-    matcher = "200,301,302,404"
+    matcher = "200"
     path    = var.health_check_path
   }
   tags = var.resource_tags
