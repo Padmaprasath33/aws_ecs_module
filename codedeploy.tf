@@ -42,6 +42,10 @@ resource "aws_codedeploy_deployment_group" "cohort_demo_ui_app_deployment_group"
         listener_arns = [aws_alb_listener.listener_80.arn]
       }
 
+      test_traffic_route {
+        listener_arns = [aws_alb_listener.listener_8080.arn]
+      }
+
       target_group {
         name = aws_lb_target_group.tg[0].name
       }
