@@ -71,11 +71,10 @@ variable "aws_efs_file_system_id" {
   //default     = ""
 }
 
-/*variable "aws_efs_access_point_id" {
+variable "aws_efs_access_point_id" {
   description = "AWS EFS access point id"
   //default     = ""
 }
-*/
 
 variable "ecs_tasks_sg" {
   description = "AWS ECS tasks security groups"

@@ -62,7 +62,7 @@ resource "aws_ecs_task_definition" "cohort_demo_ui_task_definition" {
    essential   = true
    "mountPoints": [
           {
-              "containerPath": "/usr/share/nginx/html",
+              "containerPath": "/",
               "sourceVolume": var.efs_volume_name
           }
       ]
@@ -89,10 +89,10 @@ resource "aws_ecs_task_definition" "cohort_demo_ui_task_definition" {
       root_directory          = "/"
       transit_encryption      = "ENABLED"
       transit_encryption_port = 2999
-      /*authorization_config {
+      authorization_config {
         access_point_id = var.aws_efs_access_point_id
         iam             = "ENABLED"
-      }*/
+      }
     }
   }
   tags = var.resource_tags
@@ -113,7 +113,7 @@ resource "aws_ecs_task_definition" "cohort_demo_backend_task_definition" {
    essential   = true
    "mountPoints": [
           {
-              "containerPath": "/usr/share/nginx/html",
+              "containerPath": "/",
               "sourceVolume": var.efs_volume_name
           }
       ]
@@ -140,10 +140,10 @@ resource "aws_ecs_task_definition" "cohort_demo_backend_task_definition" {
       root_directory          = "/"
       transit_encryption      = "ENABLED"
       transit_encryption_port = 2999
-      /*authorization_config {
+      authorization_config {
         access_point_id = var.aws_efs_access_point_id
         iam             = "ENABLED"
-      }*/
+      }
     }
   }
   tags = var.resource_tags
