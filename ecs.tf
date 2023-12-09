@@ -224,7 +224,7 @@ resource "aws_ecs_service" "cohort-demo-backend-service" {
   tags = var.resource_tags
 }
 
-resource "aws_appautoscaling_target" "ecs_target" {
+resource "aws_appautoscaling_target" "ecs_target_ui" {
   max_capacity       = 5
   min_capacity       = 1
   resource_id        = "service/${aws_ecs_cluster.cohort_demo_ecs_cluster.name}/${aws_ecs_service.cohort-demo-ui-service.name}"
@@ -233,12 +233,21 @@ resource "aws_appautoscaling_target" "ecs_target" {
   tags = var.resource_tags
 }
 
-resource "aws_appautoscaling_policy" "ecs_policy_memory" {
+resource "aws_appautoscaling_target" "ecs_target_backend" {
+  max_capacity       = 5
+  min_capacity       = 1
+  resource_id        = "service/${aws_ecs_cluster.cohort_demo_ecs_cluster.name}/${aws_ecs_service.cohort-demo-backend-service.name}"
+  scalable_dimension = "ecs:service:DesiredCount"
+  service_namespace  = "ecs"
+  tags = var.resource_tags
+}
+
+resource "aws_appautoscaling_policy" "ecs_policy_memory_ui" {
   name               = "2191420-memory-autoscaling"
   policy_type        = "TargetTrackingScaling"
-  resource_id        = aws_appautoscaling_target.ecs_target.resource_id
-  scalable_dimension = aws_appautoscaling_target.ecs_target.scalable_dimension
-  service_namespace  = aws_appautoscaling_target.ecs_target.service_namespace
+  resource_id        = aws_appautoscaling_target.ecs_target_ui.resource_id
+  scalable_dimension = aws_appautoscaling_target.ecs_target_ui.scalable_dimension
+  service_namespace  = aws_appautoscaling_target.ecs_target_ui.service_namespace
  
   target_tracking_scaling_policy_configuration {
    predefined_metric_specification {
@@ -249,12 +258,44 @@ resource "aws_appautoscaling_policy" "ecs_policy_memory" {
   }
 }
 
-resource "aws_appautoscaling_policy" "ecs_policy_cpu" {
+resource "aws_appautoscaling_policy" "ecs_policy_memory_backend" {
+  name               = "2191420-memory-autoscaling"
+  policy_type        = "TargetTrackingScaling"
+  resource_id        = aws_appautoscaling_target.ecs_target_backend.resource_id
+  scalable_dimension = aws_appautoscaling_target.ecs_target_backend.scalable_dimension
+  service_namespace  = aws_appautoscaling_target.ecs_target_backend.service_namespace
+ 
+  target_tracking_scaling_policy_configuration {
+   predefined_metric_specification {
+     predefined_metric_type = "ECSServiceAverageMemoryUtilization"
+   }
+ 
+   target_value       = 80
+  }
+}
+
+resource "aws_appautoscaling_policy" "ecs_policy_cpu_ui" {
   name               = "2191420-cpu-autoscaling"
   policy_type        = "TargetTrackingScaling"
-  resource_id        = aws_appautoscaling_target.ecs_target.resource_id
-  scalable_dimension = aws_appautoscaling_target.ecs_target.scalable_dimension
-  service_namespace  = aws_appautoscaling_target.ecs_target.service_namespace
+  resource_id        = aws_appautoscaling_target.ecs_target_ui.resource_id
+  scalable_dimension = aws_appautoscaling_target.ecs_target_ui.scalable_dimension
+  service_namespace  = aws_appautoscaling_target.ecs_target_ui.service_namespace
+ 
+  target_tracking_scaling_policy_configuration {
+   predefined_metric_specification {
+     predefined_metric_type = "ECSServiceAverageCPUUtilization"
+   }
+ 
+   target_value       = 70
+  }
+}
+
+resource "aws_appautoscaling_policy" "ecs_policy_cpu_backend" {
+  name               = "2191420-cpu-autoscaling"
+  policy_type        = "TargetTrackingScaling"
+  resource_id        = aws_appautoscaling_target.ecs_target_backend.resource_id
+  scalable_dimension = aws_appautoscaling_target.ecs_target_backend.scalable_dimension
+  service_namespace  = aws_appautoscaling_target.ecs_target_backend.service_namespace
  
   target_tracking_scaling_policy_configuration {
    predefined_metric_specification {
