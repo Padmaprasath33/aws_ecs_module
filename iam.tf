@@ -177,7 +177,12 @@ resource "aws_iam_role_policy" "codedeploy" {
   policy = data.aws_iam_policy_document.codedeploy.json
 }*/
 
-resource "aws_iam_role_policy_attachment" "codedeploy" {
+resource "aws_iam_role_policy_attachment" "codedeploy_ECS" {
   policy_arn = "arn:aws:iam::aws:policy/AWSCodeDeployRoleForECS"
+  role       = aws_iam_role.codedeploy.name
+}
+
+resource "aws_iam_role_policy_attachment" "codedeploy_lambda" {
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSCodeDeployRoleForLambda"
   role       = aws_iam_role.codedeploy.name
 }
