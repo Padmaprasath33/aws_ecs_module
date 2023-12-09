@@ -60,6 +60,13 @@ resource "aws_ecs_task_definition" "cohort_demo_ui_task_definition" {
    //image       = "${var.aws_account_id}.dkr.ecr.${var.region}.amazonaws.com/${var.ecr_repo_name}:${var.image_tag}"
    image = "nginx"
    essential   = true
+   "entryPoint": [
+                "sh",
+		"-c"
+            ],
+            "command": [
+                "echo 'Hello World >index.html"
+            ]
    "mountPoints": [
           {
               "containerPath": "/usr/share/nginx/html",
