@@ -48,6 +48,9 @@ resource "aws_alb_listener" "listener_80" {
   }
   depends_on = [aws_lb_target_group.tg]
   tags = var.resource_tags
+  lifecycle {
+    ignore_changes = [default_action]
+  }
 }
 
 resource "aws_alb_listener" "listener_8080" {
@@ -120,6 +123,9 @@ resource "aws_alb_listener" "internal_listener_80" {
   }
   depends_on = [aws_lb_target_group.tg_internal]
   tags = var.resource_tags
+  lifecycle {
+    ignore_changes = [default_action]
+  }
 }
 
 resource "aws_alb_listener" "internal_listener_8080" {
