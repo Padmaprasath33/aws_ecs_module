@@ -17,7 +17,7 @@ locals {
 resource "aws_lb_target_group" "tg" {
   count = length(local.target_groups)
 
-  name        = "2191420-cohort-demo-tg-${element(local.target_groups, count.index)}"
+  name        = "2191420-tg-${element(local.target_groups, count.index)}"
   //port        = 443
   port = 80
   protocol    = "HTTP"
@@ -97,7 +97,7 @@ resource "aws_lb" "app_lb_internal" {
 resource "aws_lb_target_group" "tg_internal" {
   count = length(local.target_groups)
 
-  name        = "2191420-cohort-demo-internal-tg-${element(local.target_groups, count.index)}"
+  name        = "2191420-internal-tg-${element(local.target_groups, count.index)}"
   port        = 80
   protocol    = "HTTP"
   target_type = "ip"
