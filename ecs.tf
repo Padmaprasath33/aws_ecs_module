@@ -27,17 +27,17 @@ resource "aws_kms_key" "cohort_demo_kms" {
 }
 
 resource "aws_cloudwatch_log_group" "cohort_demo_ecs_log_group" {
-  name = "cohort-demo-ecs-log-group"
+  name = "2191420-cohort-demo-ecs-log-group"
   tags = var.resource_tags
 }
 
 resource "aws_cloudwatch_log_group" "cohort_demo_ecs_ui_log_group" {
-  name = "cohort-demo-ecs-ui-log-group"
+  name = "2191420-cohort-demo-ecs-ui-log-group"
   tags = var.resource_tags
 }
 
 resource "aws_cloudwatch_log_group" "cohort_demo_ecs_backend_log_group" {
-  name = "cohort-demo-ecs-backend-log-group"
+  name = "2191420-cohort-demo-ecs-backend-log-group"
   tags = var.resource_tags
 }
 
@@ -48,7 +48,7 @@ resource "aws_cloudwatch_log_group" "cohort_demo_ecs_backend_log_group" {
 */
 
 resource "aws_ecs_task_definition" "cohort_demo_ui_task_definition" {
-  family = "cohort_demo_ui_task_definition"
+  family = "2191420-cohort-demo-ui-task-definition"
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
   cpu                      = var.ecs_fargate_cpu
@@ -99,7 +99,7 @@ resource "aws_ecs_task_definition" "cohort_demo_ui_task_definition" {
 }
 
 resource "aws_ecs_task_definition" "cohort_demo_backend_task_definition" {
-  family = "cohort_demo_backend_task_definition"
+  family = "2191420-cohort-demo-backend-task-definition"
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
   cpu                      = var.ecs_fargate_cpu
@@ -151,7 +151,7 @@ resource "aws_ecs_task_definition" "cohort_demo_backend_task_definition" {
 }
 
 resource "aws_ecs_service" "cohort-demo-ui-service" {
- name                               = "cohort-demo-ui-service"
+ name                               = "2191420-cohort-demo-ui-service"
  cluster                            = aws_ecs_cluster.cohort_demo_ecs_cluster.id
  task_definition                    = aws_ecs_task_definition.cohort_demo_ui_task_definition.arn
  desired_count                      = 3
@@ -184,7 +184,7 @@ resource "aws_ecs_service" "cohort-demo-ui-service" {
 }
 
 resource "aws_ecs_service" "cohort-demo-backend-service" {
- name                               = "cohort-demo-backend-service"
+ name                               = "2191420-cohort-demo-backend-service"
  cluster                            = aws_ecs_cluster.cohort_demo_ecs_cluster.id
  task_definition                    = aws_ecs_task_definition.cohort_demo_backend_task_definition.arn
  desired_count                      = 3
@@ -227,7 +227,7 @@ resource "aws_appautoscaling_target" "ecs_target" {
 }
 
 resource "aws_appautoscaling_policy" "ecs_policy_memory" {
-  name               = "memory-autoscaling"
+  name               = "2191420-memory-autoscaling"
   policy_type        = "TargetTrackingScaling"
   resource_id        = aws_appautoscaling_target.ecs_target.resource_id
   scalable_dimension = aws_appautoscaling_target.ecs_target.scalable_dimension
@@ -243,7 +243,7 @@ resource "aws_appautoscaling_policy" "ecs_policy_memory" {
 }
 
 resource "aws_appautoscaling_policy" "ecs_policy_cpu" {
-  name               = "cpu-autoscaling"
+  name               = "2191420-cpu-autoscaling"
   policy_type        = "TargetTrackingScaling"
   resource_id        = aws_appautoscaling_target.ecs_target.resource_id
   scalable_dimension = aws_appautoscaling_target.ecs_target.scalable_dimension
