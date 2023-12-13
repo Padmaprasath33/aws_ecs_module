@@ -211,6 +211,12 @@ resource "aws_ecs_service" "cohort-demo-backend-service" {
  deployment_controller {
     type = "CODE_DEPLOY"
   }
+
+  service_registries {
+    registry_arn   = aws_service_discovery_service.cohort_demo_service_discovery.arn
+    container_name = "cohort_demo_ecs_container"
+
+  }
  
  lifecycle {
     ignore_changes = [task_definition, desired_count, load_balancer]
