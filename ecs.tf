@@ -60,12 +60,12 @@ resource "aws_ecs_task_definition" "cohort_demo_ui_task_definition" {
    //image       = "${var.aws_account_id}.dkr.ecr.${var.region}.amazonaws.com/${var.ecr_repo_name}:${var.image_tag}"
    image = "nginx"
    essential   = true
-   /*"mountPoints": [
+   "mountPoints": [
           {
               "containerPath": "/usr/share/nginx/html",
               "sourceVolume": var.efs_volume_name
           }
-      ]*/
+      ]
    portMappings = [{
      protocol      = "tcp"
      containerPort = var.container_port
@@ -81,7 +81,7 @@ resource "aws_ecs_task_definition" "cohort_demo_ui_task_definition" {
     }
 }])
 
-  /*volume {
+  volume {
     name = var.efs_volume_name
 
     efs_volume_configuration {
@@ -93,9 +93,9 @@ resource "aws_ecs_task_definition" "cohort_demo_ui_task_definition" {
         access_point_id = var.aws_efs_access_point_id
         iam             = "ENABLED"
       }
-      
+      */
     }
-  }*/
+  }
   tags = var.resource_tags
 }
 
